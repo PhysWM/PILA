@@ -44,6 +44,7 @@
       --accent-end: #50e3c2;
       --page-shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
       --card-shadow: 0 10px 30px rgba(31, 41, 55, 0.08);
+      --comparison-video-aspect: 832 / 480;
     }
 
     body {
@@ -233,7 +234,10 @@
     .video-comparison video {
       display: block;
       width: 100%;
+      aspect-ratio: var(--comparison-video-aspect);
       height: auto;
+      object-fit: cover;
+      object-position: center;
       border-radius: 12px 12px 0 0;
       background: #000;
     }
