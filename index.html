@@ -5,21 +5,20 @@
   <!-- Meta tags for social media banners -->
   <meta name="description" content="Physics-Informed Video Generation via Mixture-of-Experts Latent Alignment">
   <meta property="og:title" content="Physics-Informed Video Generation via Mixture-of-Experts Latent Alignment"/>
-  <meta property="og:description" content="A novel paradigm for photorealistic 4D scene synthesis with faithful adherence to complex physical dynamics."/>
+  <meta property="og:description" content=""/>
   <meta property="og:url" content="YOUR_WEBSITE_URL_HERE"/>
   <meta property="og:image" content="static/image/your_banner_image.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
 
   <meta name="twitter:title" content="Physics-Informed Video Generation via Mixture-of-Experts Latent Alignment">
-  <meta name="twitter:description" content="Generate physically plausible 4D scenes with high fidelity and controllability.">
+  <meta name="twitter:description" content="">
   <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="keywords" content="4D generation, physics-aware, NeRF, video synthesis, computer vision, AI">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>PhysFM</title>
-  <link rel="icon" type="image/x-icon" href="static/images/physvideo.ico">
+  <title>PILA</title>
+  <link rel="icon" type="image/x-icon" href="static/images/pila.ico">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
@@ -727,23 +726,6 @@
 </head>
 <body id="top">
 
-  <!-- Optional Sticky Navbar (Uncomment to Enable) -->
-  <!--
-  <nav class="navbar is-fixed-top has-shadow">
-    <div class="container">
-      <div class="navbar-brand">
-        <a class="navbar-item title is-5" href="#top">physflow</a>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <a class="navbar-item" href="#abstract">Abstract</a>
-          <a class="navbar-item" href="#video-comparison">Video Comparison</a>
-          <a class="navbar-item" href="#novel-view">Novel-view</a>
-        </div>
-      </div>
-    </div>
-  </nav>
-  -->
 
 
   <section class="hero pt-6">
@@ -753,9 +735,6 @@
           <h1 class="title hero-title">
             Physics-Informed Video Generation via Mixture-of-Experts Latent Alignment
           </h1>
-          <p class="hero-subtitle">
-            A physics-aware framework for generating visually faithful videos with stronger geometric consistency, controllable dynamics, and more physically plausible motion.
-          </p>
         </div>
       </div>
     </div>
@@ -770,7 +749,7 @@
         <h2 class="title is-3 has-text-centered mb-4 section-title">Abstract</h2>
         <div class="content has-text-justified">
           <p class="is-size-5">
-            Large-scale video generation models have made remarkable progress in semantic consistency and visual quality, producing videos that are increasingly coherent and visually convincing. Nevertheless, the dynamics induced by pixel-level fitting do not naturally accommodate the physical constraints that govern real-world motion and interaction, resulting in persistent shortcomings in physical realism. To address this limitation, we propose <strong>PhysFM</strong>, which formulates video generation as constraint alignment in an operational physical latent space. Specifically, PhysFM learns a self-supervised physical attribute bank that maps frozen generator latents into a shared physical interface, initialized from observable motion and progressively expanded to auxiliary physical fields. It then structures this interface with 10 phenomenon-specific masked operator experts, whose metadata-conditioned routing and residual updates impose PDE-grounded constraints. Finally, a physics-conditioned correction pathway feeds the fused physical representation back into the pretrained flow-matching vector field, improving physical plausibility while preserving visual fidelity. Trained progressively from observable motion to full physics-to-FM coupling, PhysFM improves physical plausibility while preserving visual fidelity. Experiments on VBench, VideoPhy, and PhyGenBench show that PhysFM achieves state-of-the-art results in both visual quality and physical consistency.
+            Large-scale video generation models have made remarkable progress in semantic consistency and visual quality, producing videos that are increasingly coherent and visually convincing. Nevertheless, the dynamics induced by pixel-level fitting do not naturally accommodate the regularities that govern real-world motion and interaction, resulting in persistent shortcomings in physical plausibility. To address this limitation, we propose <strong>PILA</strong> (Physics-Informed Latent Alignment), a framework that injects physics-structured latent guidance into the frozen flow-matching dynamics of pretrained video models. Specifically, PILA first employs anchored field estimation to map frozen-generator latents into an operational physical attribute bank organized by field-proxy slots, using observable motion as a kinematic anchor for constructing less directly observed proxies. To handle the heterogeneity of real-world dynamics, PILA adopts a mixture-of-experts design over physical categories. Label-prior masked expert routing selects category-specific operator experts, whose refinements are regularized by operational residuals abstracted from physical relations. Finally, the refined proxies are fused into the physical attribute bank and decoded into a correction to the flow-matching vector field, injecting physics-aware guidance while preserving the visual prior of the pretrained backbone. With staged adapter training on Wan 2.1-1.3B and direct transfer of the learned adapter to Wan 2.2-14B, PILA achieves state-of-the-art results on VBench-2.0, VideoPhy-2, and PhyGenBench in both visual quality and benchmark-measured physical plausibility. 
           </p>
         </div>
       </div>
@@ -786,10 +765,10 @@
         </h2>
         <figure class="content-card p-4">
           <div class="has-text-centered mb-4">
-            <img src="static/images/framework.png" alt="Pipeline of PhysFM" style="width: 100%; height: auto; border-radius: 12px;">
+            <img src="static/images/pipeline.png" alt="Pipeline of PILA" style="width: 100%; height: auto; border-radius: 12px;">
           </div>
           <figcaption class="has-text-justified is-size-6" style="font-style: italic;">
-            <strong>Pipeline of PhysFM.</strong> The method proceeds through three stages: (1) a shared physical encoder predicts an explicit attribute bank and recovers observable-first physical fields (Sec.~\ref{sec:physics_experts}); (2) the router activates phenomenon-specific operator experts whose masked updates are regularized by adaptive residual constraints (Sec.~\ref{sec:physics_module}); and (3) the fused bank is decoded into a lightweight correction of the pretrained flow-matching vector field (Sec.~\ref{sec:physics_aligned_fm}).
+            <strong>Pipeline of PILA</strong>. The method proceeds through three stages: (1) operational physical interface encoding and label-prior expert routing; (2) physics-structured operator refinement of category-specific field-proxy representations; and (3) physics-to-latent flow alignment through a lightweight correction to the frozen flow-matching vector field.
           </figcaption>
         </figure>
       </div>
@@ -803,35 +782,6 @@
           <span class="icon mr-2"><i class="fas fa-film"></i></span>
           Video Comparison Gallery
         </h1>
-        <p class="section-intro">
-          Our method is compared against representative baselines on diverse physical interaction scenarios. All examples are aligned in a shared width and card system for cleaner side-by-side reading.
-        </p>
-
-        <div class="video-comparison comparison-surface">
-          <h2 class="title is-4 has-text-centered mb-5 section-title">Spatula flipping the burger on the grill.</h2>
-          <div class="columns is-vcentered">
-            <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
-              <div class="box">
-                <video poster="" autoplay controls muted loop>
-                  <source src="static/videos/ours/0036.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours</p>
-              </div>
-            </div>
-            <div class="column is-three-quarters-desktop is-full-tablet is-full-mobile">
-              <div class="columns is-multiline has-text-centered baseline-columns">
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan22/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.2-14B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wisa/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">WISA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/hunyuan/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Hunyuan</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0036.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
 
         <div class="video-comparison comparison-surface">
           <h2 class="title is-4 has-text-centered mb-5 section-title">Leather glove catching a hard baseball.</h2>
@@ -893,6 +843,75 @@
                 <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0245.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
                 <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0245.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
                 <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0245.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-comparison comparison-surface">
+          <h2 class="title is-4 has-text-centered mb-5 section-title">The sharp knife severs the fresh loaf of bread.</h2>
+          <div class="columns is-vcentered">
+            <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+              <div class="ours-video-stack">
+                <div class="box">
+                  <video poster="" autoplay controls muted loop>
+                    <source src="static/videos/ours/0161.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-14B</p>
+                </div>
+                <div class="box">
+                  <video poster="" autoplay controls muted loop>
+                    <source src="static/videos/ours_wan21/0161.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-1.3B</p>
+                </div>
+              </div>
+            </div>
+            <div class="column is-three-quarters-desktop is-full-tablet is-full-mobile">
+              <div class="columns is-multiline has-text-centered baseline-columns">
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan22/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.2-14B</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wisa/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">WISA</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/hunyuan/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Hunyuan</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="video-comparison comparison-surface">
+          <h2 class="title is-4 has-text-centered mb-5 section-title">A pebble splashes into the serene pond water.</h2>
+          <div class="columns is-vcentered">
+            <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
+              <div class="ours-video-stack">
+                <div class="box">
+                  <video poster="" autoplay controls muted loop>
+                    <source src="static/videos/ours/0338.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-14B</p>
+                </div>
+                <div class="box">
+                  <video poster="" autoplay controls muted loop>
+                    <source src="static/videos/ours_wan21/0338.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-1.3B</p>
+                </div>
+              </div>
+            </div>
+            <div class="column is-three-quarters-desktop is-full-tablet is-full-mobile">
+              <div class="columns is-multiline has-text-centered baseline-columns">
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan22/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.2-14B</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wisa/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">WISA</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/hunyuan/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Hunyuan</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
+                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
               </div>
             </div>
           </div>
@@ -1071,7 +1090,7 @@
         </div>
 
         <div class="video-comparison comparison-surface">
-          <h2 class="title is-4 has-text-centered mb-5 section-title">A piece of copper is ignited, emitting a vivid and unique flame as it burns steadily.</h2>
+          <h2 class="title is-4 has-text-centered mb-5 section-title">A small burning ball of paper was thrown into a pile of dry paper.</h2>
           <div class="columns is-vcentered">
             <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
               <div class="ours-video-stack">
@@ -1176,75 +1195,6 @@
 
 
         <div class="video-comparison comparison-surface">
-          <h2 class="title is-4 has-text-centered mb-5 section-title">The sharp knife severs the fresh loaf of bread.</h2>
-          <div class="columns is-vcentered">
-            <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
-              <div class="ours-video-stack">
-                <div class="box">
-                  <video poster="" autoplay controls muted loop>
-                    <source src="static/videos/ours/0161.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-14B</p>
-                </div>
-                <div class="box">
-                  <video poster="" autoplay controls muted loop>
-                    <source src="static/videos/ours_wan21/0161.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-1.3B</p>
-                </div>
-              </div>
-            </div>
-            <div class="column is-three-quarters-desktop is-full-tablet is-full-mobile">
-              <div class="columns is-multiline has-text-centered baseline-columns">
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan22/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.2-14B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wisa/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">WISA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/hunyuan/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Hunyuan</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0161.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="video-comparison comparison-surface">
-          <h2 class="title is-4 has-text-centered mb-5 section-title">A pebble splashes into the serene pond water.</h2>
-          <div class="columns is-vcentered">
-            <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
-              <div class="ours-video-stack">
-                <div class="box">
-                  <video poster="" autoplay controls muted loop>
-                    <source src="static/videos/ours/0338.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-14B</p>
-                </div>
-                <div class="box">
-                  <video poster="" autoplay controls muted loop>
-                    <source src="static/videos/ours_wan21/0338.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                  </video>
-                  <p class="has-text-weight-semibold mt-2 has-text-primary has-text-centered">Ours-1.3B</p>
-                </div>
-              </div>
-            </div>
-            <div class="column is-three-quarters-desktop is-full-tablet is-full-mobile">
-              <div class="columns is-multiline has-text-centered baseline-columns">
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan22/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.2-14B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wisa/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">WISA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/hunyuan/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Hunyuan</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/wan21/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">Wan 2.1-1.3B</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/videorepa/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">VideoREPA</p></div></div>
-                <div class="column is-one-third-desktop is-half-tablet is-full-mobile"><div class="box"><video poster="" autoplay controls muted loop><source src="static/videos/cogvideox/0338.mp4" type="video/mp4">Your browser does not support the video tag.</video><p class="has-text-weight-semibold mt-2">CogVideoX</p></div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-comparison comparison-surface">
           <h2 class="title is-4 has-text-centered mb-5 section-title">A magnifying glass is gradually moving closer to the petals of a flower, revealing the intricate details and textures of the flower as it approaches.</h2>
           <div class="columns is-vcentered">
             <div class="column is-one-quarter-desktop is-full-tablet is-full-mobile">
@@ -1302,10 +1252,9 @@
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
               <div class="media-card">
                 <video poster="" autoplay controls muted loop>
-                  <source src="static/videos/show/0308.mp4" type="video/mp4">
+                  <source src="static/videos/show/0058.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 1</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1314,7 +1263,6 @@
                   <source src="static/videos/show/0044.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 2</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1323,7 +1271,6 @@
                   <source src="static/videos/show/0049.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 3</p>
               </div>
             </div>
           </div>
@@ -1334,7 +1281,6 @@
                   <source src="static/videos/show/0088.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 1</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1343,7 +1289,6 @@
                   <source src="static/videos/show/0090.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 2</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1352,7 +1297,6 @@
                   <source src="static/videos/show/0093.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 3</p>
               </div>
             </div>
           </div>
@@ -1363,7 +1307,6 @@
                   <source src="static/videos/show/0095.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 1</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1372,7 +1315,6 @@
                   <source src="static/videos/show/0097.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 2</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1381,7 +1323,6 @@
                   <source src="static/videos/show/0131.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 3</p>
               </div>
             </div>
           </div>
@@ -1392,7 +1333,6 @@
                   <source src="static/videos/show/0133.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 1</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1401,7 +1341,6 @@
                   <source src="static/videos/show/0138.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 2</p>
               </div>
             </div>
             <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
@@ -1410,7 +1349,30 @@
                   <source src="static/videos/show/0217.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
-                <p class="media-label">Example 3</p>
+              </div>
+            </div>
+            <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+              <div class="media-card">
+                <video poster="" autoplay controls muted loop>
+                  <source src="static/videos/show/0102.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+              <div class="media-card">
+                <video poster="" autoplay controls muted loop>
+                  <source src="static/videos/show/0191.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <div class="column is-one-third-desktop is-half-tablet is-full-mobile">
+              <div class="media-card">
+                <video poster="" autoplay controls muted loop>
+                  <source src="static/videos/show/0287.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
